@@ -5,11 +5,23 @@ class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Column(
+    return Scaffold(
+      body: Stack(
         children: [
-          ProfileImage(),
-          ProfileDetails(),
+          Image.asset(beachImage),
+          Transform.translate(
+            offset: const Offset(0, 100),
+            child: const Column(
+              children: [
+                ProfileImage(),
+                SizedBox(
+                  height: 50,
+                ),
+                ProfileDetails(),
+                ProfileActions(),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -76,5 +88,37 @@ Widget _buildProfileRow(String heading, String value) {
         ),
       ),
     ],
+  );
+}
+
+class ProfileActions extends StatelessWidget {
+  const ProfileActions({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _buildIcon(Icons.restaurant, "Feed", Colors.blue),
+        _buildIcon(Icons.favorite, "Pet", Colors.red),
+        _buildIcon(Icons.directions, "Walk", Colors.yellow),
+      ],
+    );
+  }
+}
+
+Widget _buildIcon(IconData icon, String text1, Color c1) {
+  return Padding(
+    padding: const EdgeInsets.all(15),
+    child: Column(
+      children: [
+        Icon(
+          icon,
+          size: 40,
+          color: c1,
+        ),
+        Text(text1)
+      ],
+    ),
   );
 }
