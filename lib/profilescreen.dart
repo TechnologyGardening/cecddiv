@@ -51,6 +51,7 @@ class ProfileDetails extends StatelessWidget {
           ),
           _buildProfileRow("Designation", "Programmer"),
           _buildProfileRow("Age", "95"),
+          _buildProfileRow("DOB", "05-01-2021")
         ],
       ),
     );
@@ -62,9 +63,18 @@ Widget _buildProfileRow(String heading, String value) {
     children: [
       Text(
         '$heading : ',
-        style: const TextStyle(fontWeight: FontWeight.w500),
+        style: const TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 20,
+          color: Colors.blue,
+        ),
       ),
-      Text(value),
+      Text(
+        value,
+        style: const TextStyle(
+          color: Colors.red,
+        ),
+      ),
     ],
   );
 }
