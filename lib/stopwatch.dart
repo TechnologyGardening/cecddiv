@@ -28,7 +28,7 @@ class _StopWatchState extends State<StopWatch> {
         body: Column(
           children: [
             Expanded(child: _buildCounter(context)),
-            Expanded(child: buildDisplay()),
+            Expanded(child: buildDisplay2()),
           ],
         ));
   }
@@ -140,6 +140,36 @@ class _StopWatchState extends State<StopWatch> {
           )
       ],
     );
+  }
+
+  Widget buildDisplay2() {
+    return ListView.builder(
+        itemCount: laps.length,
+        itemBuilder: ((context, index) {
+          final milis = laps[index];
+          return SizedBox(
+            height: 60,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    index.toString(),
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  Text(
+                    _secondsToText2(milis),
+                    style: const TextStyle(fontSize: 17),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }));
   }
 
   @override
