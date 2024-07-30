@@ -25,7 +25,12 @@ class _StopWatchState extends State<StopWatch> {
         appBar: AppBar(
           title: const Text("Stop Watch"),
         ),
-        body: _buildCounter(context));
+        body: Column(
+          children: [
+            Expanded(child: _buildCounter(context)),
+            Expanded(child: buildDisplay()),
+          ],
+        ));
   }
 
   Column _buildCounter(BuildContext context) {
@@ -113,12 +118,28 @@ class _StopWatchState extends State<StopWatch> {
     return '$seconds seconds';
   }
 
+  String _secondsToText2(int m2) {
+    final seconds = m2 / 1000;
+    return '$seconds seconds';
+  }
+
   void _ontick(Timer timer) {
     if (mounted) {
       setState(() {
         milliseconds += 100;
       });
     }
+  }
+
+  Widget buildDisplay() {
+    return ListView(
+      children: [
+        for (int m1 in laps)
+          ListTile(
+            title: Text(_secondsToText2(m1)),
+          )
+      ],
+    );
   }
 
   @override
