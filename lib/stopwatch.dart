@@ -11,6 +11,7 @@ class StopWatch extends StatefulWidget {
 class _StopWatchState extends State<StopWatch> {
   int seconds = 0;
   int milliseconds = 0;
+  final laps = <int>[];
   late Timer timer;
   bool _isTicking = false;
   @override
@@ -24,46 +25,70 @@ class _StopWatchState extends State<StopWatch> {
         appBar: AppBar(
           title: const Text("Stop Watch"),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Text(
-                _secondsToText(),
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: _isTicking ? null : _starttimer,
-                  style: ButtonStyle(
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.black),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.amber)),
-                  child: const Text("Start"),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                ElevatedButton(
-                  onPressed: _isTicking ? _stoptimer : null,
-                  style: ButtonStyle(
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.black),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.blueAccent)),
-                  child: const Text("Stop"),
-                )
-              ],
-            )
-          ],
-        ));
+        body: _buildCounter(context));
+  }
+
+  Column _buildCounter(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+          child: Text(
+            _secondsToText(),
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        _buildControl()
+      ],
+    );
+  }
+
+  Row _buildControl() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ElevatedButton(
+          onPressed: _isTicking ? null : _starttimer,
+          style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.amber)),
+          child: const Text("Start"),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        ElevatedButton(
+          onPressed: _isTicking ? _stoptimer : null,
+          style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(Colors.blueAccent)),
+          child: const Text("Stop"),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        ElevatedButton(
+          onPressed: _lap,
+          style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(Colors.purpleAccent)),
+          child: const Text("Lap"),
+        )
+      ],
+    );
+  }
+
+  void _lap() {
+    setState(() {
+      laps.add(milliseconds);
+      print(laps);
+      milliseconds = 0;
+    });
   }
 
 //  onPressed: _isTicking ? null : _starttimer,   Start Button
