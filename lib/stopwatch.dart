@@ -10,11 +10,12 @@ class StopWatch extends StatefulWidget {
 
 class _StopWatchState extends State<StopWatch> {
   int seconds = 0;
+  int milliseconds = 0;
   late Timer timer;
+  bool _isTicking = false;
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(seconds: 1), _ontick);
   }
 
   @override
@@ -28,7 +29,7 @@ class _StopWatchState extends State<StopWatch> {
           children: [
             Center(
               child: Text(
-                '$seconds Seconds',
+                _secondsToText(),
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
@@ -39,13 +40,25 @@ class _StopWatchState extends State<StopWatch> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: null,
+                  onPressed: _isTicking ? null : _starttimer,
                   style: ButtonStyle(
                       foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.black),
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.amber)),
                   child: const Text("Start"),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                ElevatedButton(
+                  onPressed: _isTicking ? _stoptimer : null,
+                  style: ButtonStyle(
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.black),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blueAccent)),
+                  child: const Text("Stop"),
                 )
               ],
             )
@@ -53,10 +66,32 @@ class _StopWatchState extends State<StopWatch> {
         ));
   }
 
+//  onPressed: _isTicking ? null : _starttimer,   Start Button
+  void _starttimer() {
+    timer = Timer.periodic(const Duration(milliseconds: 100), _ontick);
+    setState(() {
+      milliseconds = 0;
+      _isTicking = true;
+    });
+  }
+
+//  onPressed: _isTicking ? _stoptimer : null,   Stop Button
+  void _stoptimer() {
+    timer.cancel();
+    setState(() {
+      _isTicking = false;
+    });
+  }
+
+  String _secondsToText() {
+    final seconds = milliseconds / 1000;
+    return '$seconds seconds';
+  }
+
   void _ontick(Timer timer) {
     if (mounted) {
       setState(() {
-        ++seconds;
+        milliseconds += 100;
       });
     }
   }
