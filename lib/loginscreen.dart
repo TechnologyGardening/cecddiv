@@ -1,3 +1,4 @@
+import 'package:cecddiv/stopwatch.dart';
 import 'package:flutter/material.dart';
 
 class MyLoginScreen extends StatefulWidget {
@@ -10,6 +11,7 @@ class MyLoginScreen extends StatefulWidget {
 class _MyLoginScreenState extends State<MyLoginScreen> {
   String name = '';
   String password = '';
+  String email = '';
   bool islogged = false;
 
   final _nameController = TextEditingController();
@@ -25,22 +27,22 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
           title: const Text("Login Screen"),
         ),
         body: Center(
-          child: islogged ? _buildSucess() : _buildLogin(),
+          child: _buildLogin(),
         ));
   }
 
-  Widget _buildSucess() {
-    return const Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          Icons.check,
-          color: Colors.green,
-        ),
-        Text("Sucess"),
-      ],
-    );
-  }
+  // Widget _buildSucess() {
+  //   return const Column(
+  //     mainAxisAlignment: MainAxisAlignment.center,
+  //     children: [
+  //       Icon(
+  //         Icons.check,
+  //         color: Colors.green,
+  //       ),
+  //       Text("Sucess"),
+  //     ],
+  //   );
+  // }
 
   Widget _buildLogin() {
     return Form(
@@ -130,7 +132,10 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
     setState(() {
       islogged = true;
       name = _nameController.text;
-      password = _emailcontroller.text;
+      password = _repassword.text;
+      email = _emailcontroller.text;
     });
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => StopWatch(name1: name, email1: email)));
   }
 }
