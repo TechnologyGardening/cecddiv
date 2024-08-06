@@ -14,6 +14,8 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
 
   final _nameController = TextEditingController();
   final _emailcontroller = TextEditingController();
+  final _passwords = TextEditingController();
+  final _repassword = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -68,6 +70,45 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                 return null;
               },
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+                controller: _passwords,
+                obscureText: true,
+                decoration: const InputDecoration(labelText: 'Password'),
+                validator: (text) {
+                  if (text!.isEmpty) {
+                    return "Password cannot be empty";
+                  }
+                  final regex = RegExp(
+                      r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$");
+                  if (!regex.hasMatch(text)) {
+                    return "Invalid password format";
+                  }
+                  return null;
+                }),
+            const SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+                controller: _repassword,
+                obscureText: true,
+                decoration: const InputDecoration(labelText: 'Password'),
+                validator: (text) {
+                  if (text!.isEmpty) {
+                    return "Password cannot be empty";
+                  }
+                  final regex = RegExp(
+                      r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$");
+                  if (!regex.hasMatch(text)) {
+                    return "Invalid password format";
+                  }
+                  if (_passwords.text != text) {
+                    return "Passwords do not match";
+                  }
+                  return null;
+                }),
             const SizedBox(
               height: 20,
             ),
