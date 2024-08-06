@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^5.1.0
+  wheel_picker: ^0.0.5
+  wheel_slider: ^1.2.1
 
 dev_dependencies:
   flutter_test:

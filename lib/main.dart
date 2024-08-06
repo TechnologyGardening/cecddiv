@@ -1,4 +1,5 @@
 import 'package:cecddiv/basicscreen.dart';
+import 'package:cecddiv/loginscreen.dart';
 import 'package:cecddiv/profilescreen.dart';
 import 'package:cecddiv/stopwatch.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +17,10 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: SafeArea(
         child: Scaffold(
-            body: Center(
-          child: StopWatch(),
-          //child: ProfileScreen(),
-        )),
+            body: Center(child: MyLoginScreen()
+                //child: StopWatch(),
+                //child: ProfileScreen(),
+                )),
       ),
     );
   }
